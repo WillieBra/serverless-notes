@@ -1,4 +1,39 @@
-# Note-Taking application using AWS SDK for JavaScript, Amazon DynamoDB, Lambda, Cognito, API Gateway, S3, Cloudfront
+# Serverless Notes
+
+A note-taking app built with React, DynamoDB, Lambda, API Gateway, Cognito, S3, and CloudFront. Project repository: [WillieBra/serverless-notes](https://github.com/WillieBra/serverless-notes).
+
+## Run this project on Windows
+
+This project is based on the [LocalStack sample](https://github.com/localstack-samples/sample-notes-app-dynamodb-lambda-apigateway) and runs the full AWS architecture locally through Docker and LocalStack.
+
+1. Install Docker Desktop and start its Linux container engine. If WSL is missing, run `scripts/install-wsl.ps1` from an Administrator PowerShell window and restart Windows if requested.
+2. Copy `.env.example` to `.env` and set `LOCALSTACK_AUTH_TOKEN` using your [LocalStack auth token](https://app.localstack.cloud/workspace/auth-token).
+3. From the project directory, run:
+
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\scripts\local.ps1
+   ```
+
+The launcher installs project-local Node.js and tooling when needed, starts LocalStack, builds and deploys the Lambda/CDK resources, configures the frontend, and serves the app at **http://127.0.0.1:5173**. Notes live in the emulated DynamoDB table; LocalStack data persists in `.localstack/`.
+
+Useful commands:
+
+```powershell
+# Install dependencies and tooling only
+.\scripts\local.ps1 -Action Setup
+# Build the frontend, Lambda functions, and infrastructure
+.\scripts\local.ps1 -Action Build
+# Deploy local infrastructure without starting the frontend
+.\scripts\local.ps1 -Action Deploy
+# Start only the frontend after a successful deployment
+.\scripts\local.ps1 -Action Frontend
+# Stop LocalStack while preserving its data
+.\scripts\local.ps1 -Action Stop
+```
+
+Press Ctrl+C to stop the frontend. `.env`, `packages/frontend/.env`, `.tools/`, and `.localstack/` are ignored by Git. The checked-in configuration contains no license token.
+
+GitHub Actions builds all three packages on pushes and pull requests. LocalStack deployment and cloud previews run only when manually requested. To run the deployment workflow, add `LOCALSTACK_AUTH_TOKEN` as a GitHub Actions repository secret and enable the `deploy_localstack` input; your local `.env` is never uploaded.
 
 | Key          | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
